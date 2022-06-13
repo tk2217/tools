@@ -1,6 +1,7 @@
 /target
 
 /.idea
+/node_modules/.cache/wrangler
 
 /output
 /dist
