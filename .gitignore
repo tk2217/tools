@@ -1,7 +1,8 @@
 /target
+/node_modules
 
-.idea
-# Wangler likes to cache stuff here
-/node_modules/.cache/wrangler
+/.idea
 
 /output
+/dist
+/.parcel-cache

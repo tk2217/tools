@@ -1,30 +1,40 @@
-use log::error;
 use std::fs;
+use std::io;
 use std::path::Path;
+use anyhow::bail;
+use log::info;
 use tera::Tera;
 use tk2217_tools::tools::dfcolor::DFColorTool;
 use tk2217_tools::Tool;
+use tk2217_tools::tools::empty_tool::EmptyTool;
 
 fn main() -> anyhow::Result<()> {
     env_logger::init();
 
-    let tera = match Tera::new("templates/**/*") {
-        Ok(t) => t,
-        Err(e) => {
-            error!("Parsing error(s): {}", e);
-            ::std::process::exit(1);
-        }
-    };
+    let tera = Tera::new("templates/**/*")?;
 
-    let active_tools = vec![
-        DFColorTool,
+    let active_tools: Vec<Box<dyn Tool>> = vec![
+        Box::from(DFColorTool),
+        Box::from(EmptyTool), // Parcel likes to be weird. - Remove once I add more tools.
     ];
 
     let output_dir = Path::new("./output");
-    fs::remove_dir_all(output_dir)?;
+    match fs::remove_dir_all(output_dir) {
+        Ok(_) => {}
+        Err(error) => {
+            match error.kind() {
+                io::ErrorKind::NotFound => {},
+                _ => bail!(error)
+            }
+        }
+    }
+
     fs::create_dir_all(output_dir)?;
 
+
     for tool in active_tools {
+        info!("Processing tool {}...", tool.get_name());
+
         let tool_dir = output_dir.join(tool.get_name());
         fs::create_dir_all(&tool_dir)?;
 

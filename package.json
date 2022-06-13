@@ -1,0 +1,19 @@
+{
+  "name": "tk2217-tools",
+  "version": "0.0.0",
+  "repository": "https://github.com/tk2217/tools",
+  "author": "tk2217 <git@tk2217.com>",
+  "license": "Apache-2.0 OR MIT",
+  "scripts": {
+    "dev": "parcel watch 'output/**/*.html'",
+    "build": "yarn run clean && cargo run --release && parcel build 'output/**/*.html'",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "parcel": "^2.6.0",
+    "rimraf": "^3.0.2"
+  },
+  "alias": {
+    "/static/": "./static/"
+  }
+}
