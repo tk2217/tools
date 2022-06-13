@@ -1,4 +1,4 @@
-@import url("/static/css/minecraft-font.css");
+@import url("/css/minecraft-font.css");
 
 * {
     font-size: 20px;
@@ -7,7 +7,7 @@
 }
 
 body {
-    background-image: url("/static/img/grass.jpg");
+    background-image: url("/img/grass.jpg");
     background-attachment: fixed;
     background-size: cover;
     display: flex;
