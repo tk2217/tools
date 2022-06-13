@@ -1,8 +1,6 @@
 /target
-/node_modules
 
 /.idea
 
 /output
 /dist
-/.parcel-cache
