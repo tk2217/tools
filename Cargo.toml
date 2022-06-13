@@ -13,3 +13,4 @@ log = "0.4"
 once_cell = "1"
 serde = { version = "1", features = ["derive"]}
 tera = "1"
+walkdir = "2"

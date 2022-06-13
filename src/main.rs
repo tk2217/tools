@@ -1,12 +1,9 @@
+use log::{debug, info};
 use std::fs;
-use std::io;
 use std::path::Path;
-use anyhow::bail;
-use log::info;
 use tera::Tera;
 use tk2217_tools::tools::dfcolor::DFColorTool;
-use tk2217_tools::Tool;
-use tk2217_tools::tools::empty_tool::EmptyTool;
+use tk2217_tools::{copy_all_from_dir, remove_dir_if_exists, Tool};
 
 fn main() -> anyhow::Result<()> {
     env_logger::init();
@@ -15,25 +12,16 @@ fn main() -> anyhow::Result<()> {
 
     let active_tools: Vec<Box<dyn Tool>> = vec![
         Box::from(DFColorTool),
-        Box::from(EmptyTool), // Parcel likes to be weird. - Remove once I add more tools.
     ];
 
     let output_dir = Path::new("./output");
-    match fs::remove_dir_all(output_dir) {
-        Ok(_) => {}
-        Err(error) => {
-            match error.kind() {
-                io::ErrorKind::NotFound => {},
-                _ => bail!(error)
-            }
-        }
-    }
+    remove_dir_if_exists(output_dir)?;
 
     fs::create_dir_all(output_dir)?;
 
-
+    info!("Building tools...");
     for tool in active_tools {
-        info!("Processing tool {}...", tool.get_name());
+        info!("Building tool {}...", tool.get_name());
 
         let tool_dir = output_dir.join(tool.get_name());
         fs::create_dir_all(&tool_dir)?;
@@ -43,9 +31,23 @@ fn main() -> anyhow::Result<()> {
             let filename = &result.0;
             let content = &result.1;
 
+            debug!("Writing file {}.", filename);
             fs::write(tool_dir.join(filename), content)?;
         }
+
+        info!("Finished building tool {}.", tool.get_name());
     }
+    info!("Finished building tools.");
+
+    info!("Assembling tools...");
+    let static_dir = Path::new("./static");
+    let dist_dir = Path::new("./dist");
+    remove_dir_if_exists(dist_dir)?;
+
+    copy_all_from_dir(output_dir, dist_dir)?;
+    copy_all_from_dir(static_dir, dist_dir)?;
+
+    info!("Finished assembling tools.");
 
     Ok(())
 }

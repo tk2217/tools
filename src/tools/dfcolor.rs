@@ -54,7 +54,13 @@ const COLORS: Lazy<Vec<DFColor>> = Lazy::new(|| {
                     if let [r, g, b] = octets[..] {
                         let value = u32::from_be_bytes([0, r, g, b]);
                         let hex = format!("{:06x}", value);
-                        let legacy = format!("&x&{}", hex.chars().map(|e| e.to_string()).collect::<Vec<String>>().join("&"));
+                        let legacy = format!(
+                            "&x&{}",
+                            hex.chars()
+                                .map(|e| e.to_string())
+                                .collect::<Vec<String>>()
+                                .join("&")
+                        );
 
                         DFColor {
                             name: name.to_string(),

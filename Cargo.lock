@@ -627,6 +627,7 @@ dependencies = [
  "once_cell",
  "serde",
  "tera",
+ "walkdir",
 ]
 
 [[package]]
