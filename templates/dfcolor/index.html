@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DiamondFire Color Palette Viewer</title>
+        <link rel="stylesheet" href="/css/dfcolor.css">
+
+        <link rel="shortcut icon" href="https://mcdiamondfire.com/data/assets/logo/230476465504911360.png" type="image/png">
+
+        <meta name="description" content="A simple viewer for the DiamondFire color palette.">
+        <meta name="language" content="en-US">
+        <meta name="robots" content="index,follow" />
+        <meta name="author" content="tk2217">
+        <meta name="url" content="https://tk2217.com/dfcolor">
+
+        <meta name="og:title" content="DiamondFire Color Palette Viewer"/>
+        <meta name="og:type" content="website"/>
+        <meta name="og:url" content="https://tk2217.com/dfcolor"/>
+        <meta name="og:image" content="https://tk2217.com/dfcolor/img/grass.jpg"/>
+        <meta name="og:description" content="A simple viewer for the DiamondFire color palette."/>
+    </head>
+    <body>
+        <h1 id="header" class="mono-font">DF Color Preview</h1>
+
+        <div id="content">
+            {% for color in colors %}
+                <span class="mc-font cls" style="color: #{{color.hex}};">
+                    <span class="sel">{{color.name}}</span>: <span class="sel">#{{color.hex}}</span> - <span class="sel">{{color.legacy}}</span>
+                </span>
+                <br/>
+            {% endfor %}
+        </div>
+    </body>
+</html>
