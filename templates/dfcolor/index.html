@@ -27,7 +27,7 @@
         <div id="content">
             {% for color in colors %}
                 <span class="mc-font cls" style="color: #{{color.hex}};">
-                    <span class="sel">{{color.name}}</span>: <span class="sel">#{{color.hex}}</span> - <span class="sel">{{color.legacy}}</span>
+                    <span class="sel">{{color.color.name}}</span>: <span class="sel">#{{color.hex}}</span> - <span class="sel">{{color.legacy}}</span>
                 </span>
                 <br/>
             {% endfor %}
